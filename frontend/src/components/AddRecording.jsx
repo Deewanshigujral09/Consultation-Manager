@@ -44,8 +44,10 @@ function AddRecording({ onAdded }) {
       formData.append("notes", notes);
       if (file) formData.append("audio", file);
 
-      await axios.post("http://localhost:5000/api/recordings/upload", formData);
-
+      await axios.post(
+        "https://consultation-manager.onrender.com/api/recordings/upload",
+        formData,
+      );
       setTitle("");
       setClientName("");
       setConsultationDate("");
@@ -57,7 +59,9 @@ function AddRecording({ onAdded }) {
       setTimeout(() => setSuccess(false), 3000);
       onAdded();
     } catch (err) {
-      setError(err.response?.data?.message || "Upload failed. Please try again.");
+      setError(
+        err.response?.data?.message || "Upload failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }

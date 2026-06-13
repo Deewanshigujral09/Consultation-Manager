@@ -39,8 +39,7 @@ function Dashboard() {
 
   const fetchRecordings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/recordings");
-      setRecordings(res.data);
+const res = await axios.get("https://consultation-manager.onrender.com/api/recordings");      setRecordings(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -52,8 +51,7 @@ function Dashboard() {
 
   const updateRecording = async (id, title) => {
     try {
-      await axios.put(`http://localhost:5000/api/recordings/${id}`, { title });
-      setEditingId(null);
+await axios.put(`https://consultation-manager.onrender.com/api/recordings/${id}`, { title });      setEditingId(null);
       fetchRecordings();
     } catch (error) {
       console.error(error);
@@ -64,8 +62,7 @@ function Dashboard() {
     if (!window.confirm("Are you sure you want to delete this recording?"))
       return;
     try {
-      await axios.delete(`http://localhost:5000/api/recordings/${id}`);
-      fetchRecordings();
+await axios.delete(`https://consultation-manager.onrender.com/api/recordings/${id}`);      fetchRecordings();
     } catch (error) {
       console.error(error);
     }
@@ -269,15 +266,13 @@ const matchesSearch = (recording.title || "")
                   className="w-full rounded-lg border border-slate-700 mt-2"
                 >
                   <source
-                    src={`http://localhost:5000${recording.filePath}`}
-                    type="video/mp4"
+src={`https://consultation-manager.onrender.com${recording.filePath}`}                    type="video/mp4"
                   />
                   Your browser does not support the video tag.
                 </video>
                 <div className="mt-3">
                   <a
-                    href={`http://localhost:5000${recording.filePath}`}
-                    download
+href={`https://consultation-manager.onrender.com${recording.filePath}`}                    download
                     className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm transition-colors"
                   >
                     <FaDownload />
