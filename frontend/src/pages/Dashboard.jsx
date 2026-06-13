@@ -25,6 +25,12 @@ const categoryBadgeColors = {
   "Gemstone Recommendation": "bg-purple-600",
 };
 
+const statusColors = {
+  Pending: "bg-yellow-600",
+  Accepted: "bg-green-600",
+  Rejected: "bg-red-600",
+};
+
 function Dashboard() {
   const [recordings, setRecordings] = useState([]);
   const [search, setSearch] = useState("");
@@ -37,12 +43,24 @@ function Dashboard() {
   const totalClients = new Set(recordings.map((r) => r.clientName)).size;
   const totalUploads = recordings.filter((r) => r.filePath).length;
 
+  const pendingCount = recordings.filter((r) => r.status === "Pending").length;
+
+  const acceptedCount = recordings.filter(
+    (r) => r.status === "Accepted",
+  ).length;
+
+  const rejectedCount = recordings.filter(
+    (r) => r.status === "Rejected",
+  ).length;
   const fetchRecordings = async () => {
     try {
-      const res = await axios.get(
-        "https://consultation-manager.onrender.com/api/recordings",
-      );
-      setRecordings(res.data);
+const res = await axios.get(
+  "http://localhost:5000/api/recordings"
+);
+
+console.log("Recordings:", res.data);
+
+setRecordings(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -78,6 +96,21 @@ function Dashboard() {
     }
   };
 
+const updateStatus = async (id, status) => {
+  try {
+    const res = await axios.put(
+  `http://localhost:5000/api/recordings/${id}`,
+  { status }
+);
+
+   console.log("STATUS AFTER UPDATE:", res.data.status);
+console.log(JSON.stringify(res.data, null, 2));
+
+    fetchRecordings();
+  } catch (err) {
+    console.error(err);
+  }
+};
   const filteredRecordings = recordings
     .filter((recording) => {
       const matchesSearch = (recording.title || "")
@@ -113,7 +146,7 @@ function Dashboard() {
         </div>
 
         {/* STATS */}
-        <div className="grid grid-cols-3 gap-3 md:gap-4 mb-6">
+        <div className="grid grid-cols-6 gap-3 md:gap-4 mb-6">
           <div className="bg-slate-900 border border-slate-700 rounded-xl p-3 md:p-6 flex flex-col md:flex-row items-center gap-2 md:gap-4">
             <div className="bg-blue-500/20 p-2 md:p-4 rounded-xl">
               <FaMicrophone className="text-blue-400 text-lg md:text-2xl" />
@@ -143,6 +176,27 @@ function Dashboard() {
               <h2 className="text-2xl md:text-3xl font-bold">{totalUploads}</h2>
             </div>
           </div>
+
+          <div className="bg-slate-900 border border-slate-700 rounded-xl p-3 md:p-6">
+  <p className="text-yellow-400 text-xs">Pending</p>
+  <h2 className="text-2xl md:text-3xl font-bold">
+    {pendingCount}
+  </h2>
+</div>
+
+<div className="bg-slate-900 border border-slate-700 rounded-xl p-3 md:p-6">
+  <p className="text-green-400 text-xs">Accepted</p>
+  <h2 className="text-2xl md:text-3xl font-bold">
+    {acceptedCount}
+  </h2>
+</div>
+
+<div className="bg-slate-900 border border-slate-700 rounded-xl p-3 md:p-6">
+  <p className="text-red-400 text-xs">Rejected</p>
+  <h2 className="text-2xl md:text-3xl font-bold">
+    {rejectedCount}
+  </h2>
+</div>
         </div>
 
         {/* ADD RECORDING */}
@@ -250,11 +304,29 @@ function Dashboard() {
                   </h2>
                 )}
               </div>
-              <span
-                className={`${categoryBadgeColors[recording.category] || "bg-blue-600"} px-2 py-1 rounded-full text-xs font-medium shrink-0 ml-2`}
-              >
-                {recording.category || "Interview"}
-              </span>
+<div className="flex gap-2">
+  <span
+    className={`${categoryBadgeColors[recording.category] || "bg-blue-600"} px-2 py-1 rounded-full text-xs font-medium`}
+  >
+    {recording.category}
+  </span>
+
+<select
+  value={recording.status || "Pending"}
+  onChange={(e) => {
+    console.log("Dropdown changed");
+    console.log(recording._id);
+    console.log(e.target.value);
+
+    updateStatus(recording._id, e.target.value);
+  }}
+  className="bg-slate-800 border border-slate-600 text-white text-xs px-2 py-1 rounded"
+>
+  <option value="Pending">Pending</option>
+  <option value="Accepted">Accepted</option>
+  <option value="Rejected">Rejected</option>
+</select>
+</div>
             </div>
 
             <div className="flex flex-wrap gap-3 mb-3 text-sm text-gray-300">

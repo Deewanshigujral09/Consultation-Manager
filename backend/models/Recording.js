@@ -30,10 +30,18 @@ const recordingSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    status: {
+      type: String,
+      enum: ["Pending", "Accepted", "Rejected"],
+      default: "Pending",
+    },
   },
   {
     timestamps: true,
   },
 );
+
+console.log("SCHEMA FIELDS:");
+console.log(Object.keys(recordingSchema.obj));
 
 module.exports = mongoose.model("Recording", recordingSchema);

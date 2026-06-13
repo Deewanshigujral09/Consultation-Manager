@@ -40,14 +40,15 @@ const createRecording = async (req, res) => {
 // POST create with file upload
 const uploadRecording = async (req, res) => {
   try {
-    const recording = await Recording.create({
-      title: req.body.title,
-      category: req.body.category,
-      clientName: req.body.clientName,
-      consultationDate: req.body.consultationDate,
-      notes: req.body.notes,
-      filePath: req.file ? "/uploads/" + req.file.filename : "",
-    });
+const recording = await Recording.create({
+  title: req.body.title,
+  category: req.body.category,
+  clientName: req.body.clientName,
+  consultationDate: req.body.consultationDate,
+  notes: req.body.notes,
+  status: req.body.status || "Pending",
+  filePath: req.file ? "/uploads/" + req.file.filename : "",
+});
     res.json(recording);
   } catch (error) {
     console.error(error);
@@ -58,18 +59,25 @@ const uploadRecording = async (req, res) => {
 // PUT update recording
 const updateRecording = async (req, res) => {
   try {
+    console.log("BODY:", req.body);
+
     const recording = await Recording.findByIdAndUpdate(
       req.params.id,
-      req.body,
-      { new: true }
+      { $set: req.body },
+      {
+        new: true,
+        runValidators: true,
+      }
     );
+
+    console.log("UPDATED RECORD:", recording);
+
     res.json(recording);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
-
 // DELETE recording
 const deleteRecording = async (req, res) => {
   try {
