@@ -189,11 +189,18 @@ function Dashboard() {
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="bg-slate-900 border border-slate-700 px-3 py-3 rounded-xl text-sm"
             >
-              <option value="All">All Categories</option>
-              <option value="Interview">Interview</option>
-              <option value="Career Guidance">Career Guidance</option>
-              <option value="Resume Review">Resume Review</option>
-              <option value="Technical Consultation">Technical</option>
+              <option value="Birth Chart Reading">Birth Chart Reading</option>
+              <option value="Career Astrology">Career Astrology</option>
+              <option value="Marriage Compatibility">
+                Marriage Compatibility
+              </option>
+              <option value="Financial Astrology">Financial Astrology</option>
+              <option value="Health & Wellness Guidance">
+                Health & Wellness Guidance
+              </option>
+              <option value="Gemstone Recommendation">
+                Gemstone Recommendation
+              </option>
             </select>
             <select
               value={sortOrder}
