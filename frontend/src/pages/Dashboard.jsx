@@ -12,17 +12,17 @@ import {
 } from "react-icons/fa";
 
 const categoryColors = {
-  Interview: "border-blue-500",
-  "Career Guidance": "border-green-500",
-  "Resume Review": "border-yellow-500",
-  "Technical Consultation": "border-purple-500",
+  "Birth Chart Reading": "border-blue-500",
+  "Career Astrology": "border-green-500",
+  "Marriage Compatibility": "border-pink-500",
+  "Gemstone Recommendation": "border-purple-500",
 };
 
 const categoryBadgeColors = {
-  Interview: "bg-blue-600",
-  "Career Guidance": "bg-green-600",
-  "Resume Review": "bg-yellow-600",
-  "Technical Consultation": "bg-purple-600",
+  "Birth Chart Reading": "bg-blue-600",
+  "Career Astrology": "bg-green-600",
+  "Marriage Compatibility": "bg-pink-600",
+  "Gemstone Recommendation": "bg-purple-600",
 };
 
 function Dashboard() {
@@ -39,7 +39,10 @@ function Dashboard() {
 
   const fetchRecordings = async () => {
     try {
-const res = await axios.get("https://consultation-manager.onrender.com/api/recordings");      setRecordings(res.data);
+      const res = await axios.get(
+        "https://consultation-manager.onrender.com/api/recordings",
+      );
+      setRecordings(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +54,11 @@ const res = await axios.get("https://consultation-manager.onrender.com/api/recor
 
   const updateRecording = async (id, title) => {
     try {
-await axios.put(`https://consultation-manager.onrender.com/api/recordings/${id}`, { title });      setEditingId(null);
+      await axios.put(
+        `https://consultation-manager.onrender.com/api/recordings/${id}`,
+        { title },
+      );
+      setEditingId(null);
       fetchRecordings();
     } catch (error) {
       console.error(error);
@@ -62,7 +69,10 @@ await axios.put(`https://consultation-manager.onrender.com/api/recordings/${id}`
     if (!window.confirm("Are you sure you want to delete this recording?"))
       return;
     try {
-await axios.delete(`https://consultation-manager.onrender.com/api/recordings/${id}`);      fetchRecordings();
+      await axios.delete(
+        `https://consultation-manager.onrender.com/api/recordings/${id}`,
+      );
+      fetchRecordings();
     } catch (error) {
       console.error(error);
     }
@@ -70,9 +80,9 @@ await axios.delete(`https://consultation-manager.onrender.com/api/recordings/${i
 
   const filteredRecordings = recordings
     .filter((recording) => {
-const matchesSearch = (recording.title || "")
-  .toLowerCase()
-  .includes(search.toLowerCase());
+      const matchesSearch = (recording.title || "")
+        .toLowerCase()
+        .includes(search.toLowerCase());
       const matchesCategory =
         categoryFilter === "All" ||
         (recording.category || "Interview") === categoryFilter;
@@ -94,7 +104,7 @@ const matchesSearch = (recording.title || "")
           <div className="flex items-center justify-center gap-3 mb-2">
             <FaMicrophone className="text-blue-400 text-3xl md:text-4xl" />
             <h1 className="text-2xl md:text-4xl font-bold">
-              Consultation Manager
+              Astrology Guidance Manager
             </h1>
           </div>
           <p className="text-center text-gray-400 text-sm md:text-base">
@@ -266,13 +276,15 @@ const matchesSearch = (recording.title || "")
                   className="w-full rounded-lg border border-slate-700 mt-2"
                 >
                   <source
-src={`https://consultation-manager.onrender.com${recording.filePath}`}                    type="video/mp4"
+                    src={`https://consultation-manager.onrender.com${recording.filePath}`}
+                    type="video/mp4"
                   />
                   Your browser does not support the video tag.
                 </video>
                 <div className="mt-3">
                   <a
-href={`https://consultation-manager.onrender.com${recording.filePath}`}                    download
+                    href={`https://consultation-manager.onrender.com${recording.filePath}`}
+                    download
                     className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm transition-colors"
                   >
                     <FaDownload />

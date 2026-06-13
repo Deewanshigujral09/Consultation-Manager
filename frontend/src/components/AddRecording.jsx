@@ -8,7 +8,7 @@ function AddRecording({ onAdded }) {
   const [consultationDate, setConsultationDate] = useState("");
   const [notes, setNotes] = useState("");
   const [file, setFile] = useState(null);
-  const [category, setCategory] = useState("Interview");
+  const [category, setCategory] = useState("Birth Chart Reading");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -71,7 +71,7 @@ function AddRecording({ onAdded }) {
     <div>
       <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
         <FaUpload className="text-blue-400" />
-        Add New Recording
+        Add New Astrology Consultation{" "}
       </h2>
 
       {error && (
@@ -89,7 +89,7 @@ function AddRecording({ onAdded }) {
       <div className="grid md:grid-cols-2 gap-4">
         <input
           type="text"
-          placeholder="Title"
+          placeholder="Consultation Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="bg-slate-800 border border-slate-700 focus:border-blue-500 outline-none p-3 rounded-xl transition-colors"
@@ -110,10 +110,12 @@ function AddRecording({ onAdded }) {
           onChange={(e) => setCategory(e.target.value)}
           className="bg-slate-800 border border-slate-700 focus:border-blue-500 outline-none p-3 rounded-xl transition-colors"
         >
-          <option>Interview</option>
-          <option>Career Guidance</option>
-          <option>Resume Review</option>
-          <option>Technical Consultation</option>
+          <option>Birth Chart Reading</option>
+          <option>Career Astrology</option>
+          <option>Marriage Compatibility</option>
+          <option>Gemstone Recommendation</option>
+          <option>Health & Wellness Guidance</option>
+          <option>Financial Astrology</option>
         </select>
 
         <input
@@ -139,7 +141,7 @@ function AddRecording({ onAdded }) {
       </div>
 
       <textarea
-        placeholder="Notes (optional)"
+        placeholder="Astrological observations, remedies, predictions, and recommendations..."
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
         className="bg-slate-800 border border-slate-700 focus:border-blue-500 outline-none p-3 rounded-xl w-full mt-4 transition-colors"
@@ -153,7 +155,7 @@ function AddRecording({ onAdded }) {
         className="mt-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-colors"
       >
         <FaUpload />
-        {loading ? "Uploading..." : "Upload Recording"}
+        {loading ? "Uploading..." : "Save Consultation"}{" "}
       </button>
     </div>
   );
