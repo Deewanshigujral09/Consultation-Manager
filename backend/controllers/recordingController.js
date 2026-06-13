@@ -37,24 +37,14 @@ const createRecording = async (req, res) => {
   }
 };
 
-// POST create with file upload
-const uploadRecording = async (req, res) => {
-  try {
 const recording = await Recording.create({
   title: req.body.title,
   category: req.body.category,
   clientName: req.body.clientName,
   consultationDate: req.body.consultationDate,
   notes: req.body.notes,
-  status: req.body.status || "Pending",
   filePath: req.file ? "/uploads/" + req.file.filename : "",
 });
-    res.json(recording);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error.message });
-  }
-};
 
 // PUT update recording
 const updateRecording = async (req, res) => {

@@ -13,7 +13,6 @@ function AddRecording({ onAdded }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const fileInputRef = useRef(null);
-  const [status, setStatus] = useState("Pending");
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -42,7 +41,6 @@ function AddRecording({ onAdded }) {
       formData.append("clientName", clientName);
       formData.append("consultationDate", consultationDate);
       formData.append("category", category);
-      formData.append("status", status);
       formData.append("notes", notes);
       if (file) formData.append("audio", file);
 
@@ -106,16 +104,6 @@ function AddRecording({ onAdded }) {
           className="bg-slate-800 border border-slate-700 focus:border-blue-500 outline-none p-3 rounded-xl transition-colors"
           required
         />
-
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="bg-slate-800 border border-slate-700 p-3 rounded-xl"
-        >
-          <option>Pending</option>
-          <option>Accepted</option>
-          <option>Rejected</option>
-        </select>
 
         <select
           value={category}
