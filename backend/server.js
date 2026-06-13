@@ -19,6 +19,8 @@ app.use(
   express.static(path.join(__dirname, "uploads"))
 );
 
+console.log("MONGO_URI =", process.env.MONGO_URI);
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
